@@ -11,13 +11,8 @@
   border-radius: 10px;
   box-shadow: -9px 17px 13px rgb(9 9 9 /16%);
 }
-
-
-.btnStyle{
-  color: #fff;
-  border: none;
-  padding: 5px, 9px;
-  border-radius: 50%;
-  cursor: pointer;
-  float: right;
+.title{
+  color:darkgoldenrod;
 }
+
+
