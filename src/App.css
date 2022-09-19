@@ -3,25 +3,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-  background: aliceblue;
-}
-
-.container{
-  margin: auto;
-  max-width: 600px;
-  background-color: antiquewhite;
-}
-.todoBlock{
-  padding: 50px;
-  margin-top: 50px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: -9px 17px 13px rgb(9 9 9 /16%);
-}
-.title{
-  color:darkgoldenrod;
-}
-
-
