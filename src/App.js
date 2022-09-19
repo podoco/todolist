@@ -1,108 +1,107 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 
-export default class App extends Component {
+export default function App() {
 
-  state = {
-    todoData: [
-      {
-        id: "1",
-        title: "공부하기",
-        completed: true
-      },
-      {
-        id: "2",
-        title: "청소하기",
-        completed: false
-      }
-    ],
-    value: ""
-  }
+  const [todoData, setTodoData] = useState([]);
+  const [value, setValue] = useState("");
 
-  listStyle = (completed) => {
+  const btnStyle = {
+    color: '#fff',
+    border: 'none',
+    padding: '5px, 9px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    float: 'right'
+  };
+
+  const listStyle = (completed) => {
     return {
-      padding: "10px",
+      padding: "5px",
       borderBottom: "1px #ccc dotted",
       textDecoration: completed ? "line-through" : "none"
     }
   }
 
 
-  handleClick = (id) => {
-    let newTodoData = this.state.todoData.filter(data => data.id !== id)
-    this.setState({ todoData: newTodoData });
+  const handleClick = (id) => {
+    let newTodoData = todoData.filter(data => data.id !== id)
+    setTodoData(newTodoData);
   }
 
-  handleChange = (e) => {
-    this.setState({ value: e.target.value });
+  const handleChange = (e) => {
+    setValue(e.target.value);
   }
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     //새로운 할 일 데이터
     let newTodo = {
       id: Date.now(),
-      title: this.state.value,
+      title: value,
       completed: false
     };
-    //원래 있던 할 일에 새로운 할 일 더해주기
-    this.setState({ todoData: [...this.state.todoData, newTodo] });
-    this.setState({ value: "" });
+
+    //앞에 있던 할 일에 새로운 할 일 더하기
+    setTodoData((prev) => [...prev, newTodo]);
+    setValue("");
+
   }
 
-  handleCompleChange = (id) => {
-    let newTodoData = this.state.todoData.map((data) => {
+  const handleCompleChange = (id) => {
+
+    let newTodoData = todoData.map((data) => {
       if (data.id === id) {
         data.completed = !data.completed;
       }
       return data;
     });
-    this.setState({ todoData: newTodoData });
+
+    setTodoData(newTodoData);
   }
 
-  render() {
-    return (
-      <div className='container'>
-        <div className='todoBlock'>
-          <div className='title'>
-            <h1>할일목록</h1>
-          </div>
 
-          {this.state.todoData.map((data) => (
-            <div style={this.listStyle(data.completed)} key={data.id}>
-              <p>
-                <input
-                  onChange={() => this.handleCompleChange(data.id)}
-                  type="checkbox"
-                  defaultChecked={false} />
-                {data.title}
-                <button className='btnStyle' onClick={() => this.handleClick(data.id)}>x</button>
-              </p>
-            </div>
-          ))}
-
-          <form style={{ display: "flex" }} onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              name="value"
-              style={{ flex: "10", padding: "5px" }}
-              placeholder="해야 할 일을 입력하세요."
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-            <input
-              type="submit"
-              value="입력"
-              className='btn'
-              style={{ flex: '1' }}
-            />
-          </form>
-
-
+  return (
+    <div className='container'>
+      <div className='todoBlock'>
+        <div className='title'>
+          <h1>할일목록</h1>
         </div>
+
+        {todoData.map((data) => (
+          <div style={listStyle(data.completed)} key={data.id}>
+            <p>
+              <input
+                onChange={() => handleCompleChange(data.id)}
+                type="checkbox"
+                defaultChecked={false} />
+              {data.title}
+              <button className='btnStyle' onClick={() => handleClick(data.id)}>x</button>
+            </p>
+          </div>
+        ))}
+
+        <form style={{ display: "flex" }} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="value"
+            style={{ flex: "10", padding: "5px", marginTop: "15px" }}
+            placeholder="해야 할 일을 입력하세요."
+            value={value}
+            onChange={handleChange}
+          />
+          <input
+            type="submit"
+            value="입력"
+            className='btn'
+            style={{ flex: '1', marginTop: "15px" }}
+          />
+        </form>
+
+
       </div>
-    )
-  }
+    </div>
+  )
 }
