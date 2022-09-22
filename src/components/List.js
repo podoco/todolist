@@ -16,12 +16,14 @@ const List = React.memo(({
       return data;
     });
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
   }
 
   //삭제하기
   const handleClick = (id) => {
     let newTodoData = todoData.filter(data => data.id !== id)
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
   }
   const handleEditChange = (event) => {
     setEditedTitle(event.target.value);
@@ -38,6 +40,7 @@ const List = React.memo(({
     })
 
     setTodoData(newTodoData)
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
     setIsEditing(false)
   }
 

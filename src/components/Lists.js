@@ -2,8 +2,6 @@ import React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import List from './List';
 
-
-
 const Lists = React.memo(({ todoData, setTodoData }) => {
 
   // const btnStyle = {
@@ -38,6 +36,8 @@ const Lists = React.memo(({ todoData, setTodoData }) => {
     //원하는 자리에 redorderedItem을 Insert 해줍니다.
     newTodoData.splice(result.destination.index, 0, reorderedItem);
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
+
   }
 
   return (
